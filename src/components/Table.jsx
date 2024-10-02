@@ -2,7 +2,7 @@ import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 
 
-export default function MUITable({rows,columns}) {
+export default function MUITable({rows,columns,onRowClick}) {
   return (
     <div style={{ height: 500, width: '100%' }}>
       <DataGrid
@@ -15,6 +15,7 @@ export default function MUITable({rows,columns}) {
             },
           },
         }}
+        onRowClick={onRowClick}
         pageSizeOptions={[5,10,20]}
         checkboxSelection
         disableRowSelectionOnClick

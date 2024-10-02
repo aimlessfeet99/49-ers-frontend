@@ -7,27 +7,19 @@ import useSWR from "swr";
 import MUITable from "./Table";
 
 const PlayersTable = () => {
-  const { selectedGame, fetchPlayerInfo } = useGameStore();
-
+  const { selectedGame, fetchPlayerInfo,playerInfo,setPlayerInfo } = useGameStore();
+console.log(playerInfo)
   const { data: players, error } = useSWR(
     selectedGame?.game_id ? ["players", selectedGame?.game_id] : null,
     () => fetchPlayers(selectedGame?.game_id)
   );
   
-  const [selectedPlayer, setSelectedPlayer] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedRowId, setSelectedRowId] = useState(null);
-
-  const handlePlayerClick = (playerId) => {
-    fetchPlayerInfo(selectedGame?.game_id, playerId);
-    setSelectedPlayer(playerId);
-    setSelectedRowId(playerId); // Mark the selected row
-    setIsModalOpen(true);
+  const handlePlayerClick = async(playerId) => {
+    await fetchPlayerInfo(selectedGame?.game_id, playerId);
   };
 
   const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setSelectedPlayer(null);
+    setPlayerInfo(null);
   };
 
   if (error) return <div>Error loading players.</div>;
@@ -86,8 +78,8 @@ const PlayersTable = () => {
       />
       
       {/* Modal to show player info */}
-      {isModalOpen && (
-        <Modal player={selectedPlayer} onClose={handleCloseModal} />
+      {!!playerInfo && (
+        <Modal  onClose={handleCloseModal} />
       )}
     </div>
   );

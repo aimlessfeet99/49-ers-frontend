@@ -7,6 +7,7 @@ const useGameStore = create((set) => ({
 
   // Action to set the selected game
   setSelectedGame: (game) => set({ selectedGame: game }),
+  setPlayerInfo: () => set({ playerInfo: null }),
 
   // Action to fetch player info based on player ID
   fetchPlayerInfo: async (selectedGame, playerId) => {
